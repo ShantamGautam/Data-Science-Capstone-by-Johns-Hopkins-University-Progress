@@ -1,94 +1,43 @@
-suppressPackageStartupMessages(c(
-        library(shinythemes),
-        library(shiny),
-        library(tm),
-        library(stringr),
-        library(markdown),
-        library(stylo)))
+library(shiny)
 
-shinyUI(navbarPage("Coursera Data Science Capstone", 
-                   
-                   theme = shinytheme("flatly"),
-                   
-############################### ~~~~~~~~1~~~~~~~~ ##############################  
-## Tab 1 - Prediction
+# Define UI for dataset viewer application
+shinyUI(fluidPage(theme = "bootstrap.min.css",
+  
+  # Application title
+  titlePanel("Predicting next words with R"),
 
-tabPanel("Next Word Prediction",
-         
-         tags$head(includeScript("./js/ga-shinyapps-io.js")),
-         
-         fluidRow(
-                 
-                 column(3),
-                 column(6,
-                        tags$div(textInput("text", 
-                                  label = h3("Enter your text here:"),
-                                  value = ),
-                        tags$span(style="color:grey",("Only English words are supported.")),
-                        br(),
-                        tags$hr(),
-                        h4("The predicted next word:"),
-                        tags$span(style="color:darkred",
-                                  tags$strong(tags$h3(textOutput("predictedWord")))),
-                        br(),
-                        tags$hr(),
-                        h4("What you have entered:"),
-                        tags$em(tags$h4(textOutput("enteredWords"))),
-                        align="center")
-                        ),
-                 column(3)
-         )
-),
-
-############################### ~~~~~~~~2~~~~~~~~ ##############################
-## Tab 2 - About 
-
-tabPanel("About This Application",
-         fluidRow(
-                 column(2,
-                        p("")),
-                 column(8,
-                        includeMarkdown("./about/about.md")),
-                 column(2,
-                        p(""))
-         )
-),
-
-############################### ~~~~~~~~F~~~~~~~~ ##############################
-
-## Footer
-
-tags$hr(),
-
-tags$br(),
-
-tags$span(style="color:grey", 
-          tags$footer(("© 2015 - "), 
-                      tags$a(
-                              href="http://nierhoff.info",
-                              target="_blank",
-                              "Maximilian H. Nierhoff."), 
-                      tags$br(),
-                      ("Built with"), tags$a(
-                              href="http://www.r-project.org/",
-                              target="_blank",
-                              "R"),
-                      ("&"), tags$a(
-                              href="http://shiny.rstudio.com",
-                              target="_blank",
-                              "Shiny."),
-#                       ("&"), tags$a(
-#                               href="http://www.rstudio.com/products/shiny/shiny-server",
-#                               target="_blank",
-#                               "Shiny Server."),
-#                       ("Hosted on"), tags$a(
-#                               href="https://www.digitalocean.com/?refcode=f34ade566630",
-#                               target="_blank",
-#                               "DigitalOcean."),
-                      
-                      align = "center"),
-          
-          tags$br()
-)
-)
-)
+  sidebarLayout(position = "left",
+    sidebarPanel(
+      h3("What is this ?"),
+      p("This application predicts the most likely next words based on what you typed."),
+      p("It is developed in R and it is the final project for the Data Science Specialization on Coursera."),
+      
+      h3("How to use it ?"),
+      p("Just start typing. The predictions are updated after each space."),
+      
+      h3("Additional information"),
+      div(
+        a("Project presentation",
+          href="http://rpubs.com/ssoualem/jhu_capstone_presentation")
+      ),
+      div(
+        a("Data Science Specialization on Coursera by the Johns Hopkins University",
+        href="https://www.coursera.org/specializations/jhu-data-science")
+      )
+    ),
+      
+    mainPanel(
+      textInput("userTxt", "Type here :", ""),
+      h4("Most likely next words :"),
+      textOutput("wordPredicted1", container = div),
+      textOutput("wordPredicted2", container = div),
+      textOutput("wordPredicted3", container = div),
+      textOutput("wordPredicted4", container = div),
+      textOutput("wordPredicted5", container = div)
+    )
+  ),
+  div(class = "footer",
+      #style="text-align: center;",
+      p("Samy Soualem - October 2016")
+  )
+))
